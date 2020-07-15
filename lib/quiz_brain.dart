@@ -4,46 +4,49 @@ class QuizBrain {
   int _questionNumber = 0;
   List<Question> _questionBank = [
     Question(
-        question: 'Some cats are actually allergic to humans', answer: true),
+        questionText: 'Some cats are actually allergic to humans',
+        questionAnswer: true),
     Question(
-        question: 'You can lead a cow down stairs but not up stairs.',
-        answer: false),
+        questionText: 'You can lead a cow down stairs but not up stairs.',
+        questionAnswer: false),
     Question(
-        question: 'Approximately one quarter of human bones are in the feet.',
-        answer: true),
-    Question(question: 'A slug\'s blood is green.', answer: true),
+        questionText:
+            'Approximately one quarter of human bones are in the feet.',
+        questionAnswer: true),
+    Question(questionText: 'A slug\'s blood is green.', questionAnswer: true),
     Question(
-        question: 'Buzz Aldrin\'s mother\'s maiden name was \"Moon\".',
-        answer: true),
+        questionText: 'Buzz Aldrin\'s mother\'s maiden name was \"Moon\".',
+        questionAnswer: true),
     Question(
-        question: 'It is illegal to pee in the Ocean in Portugal.',
-        answer: true),
+        questionText: 'It is illegal to pee in the Ocean in Portugal.',
+        questionAnswer: true),
     Question(
-        question:
+        questionText:
             'No piece of square dry paper can be folded in half more than 7 times.',
-        answer: false),
+        questionAnswer: false),
     Question(
-        question:
+        questionText:
             'In London, UK, if you happen to die in the House of Parliament, you are technically entitled to a state funeral, because the building is considered too sacred a place.',
-        answer: true),
+        questionAnswer: true),
     Question(
-        question:
+        questionText:
             'The loudest sound produced by any animal is 188 decibels. That animal is the African Elephant.',
-        answer: false),
+        questionAnswer: false),
     Question(
-        question:
+        questionText:
             'The total surface area of two human lungs is approximately 70 square metres.',
-        answer: true),
+        questionAnswer: true),
     Question(
-        question: 'Google was originally called \"Backrub\".', answer: true),
+        questionText: 'Google was originally called \"Backrub\".',
+        questionAnswer: true),
     Question(
-        question:
+        questionText:
             'Chocolate affects a dog\'s heart and nervous system; a few ounces are enough to kill a small dog.',
-        answer: true),
+        questionAnswer: true),
     Question(
-        question:
+        questionText:
             'In West Virginia, USA, if you accidentally hit an animal with your car, you are free to take it home to eat.',
-        answer: true),
+        questionAnswer: true),
   ];
 
   void nextQuestion() {
@@ -52,11 +55,27 @@ class QuizBrain {
     }
   }
 
+  bool isFinished() {
+    if (this._questionNumber == this._questionBank.length - 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  int getListLength() {
+    return this._questionBank.length;
+  }
+
   String getQuestion() {
     return _questionBank[this._questionNumber].questionText;
   }
 
   bool getAnswer() {
     return _questionBank[this._questionNumber].questionAnswer;
+  }
+
+  void reset() {
+    this._questionNumber = 0;
   }
 }

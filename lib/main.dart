@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'quiz_brain.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'quiz_result.dart';
 
 QuizBrain quizBrain = QuizBrain();
+QuizResult quizResult = QuizResult();
 
 void main() {
   runApp(Quizzler());
@@ -31,8 +34,28 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
-  // variables
-  List<Icon> iconList = [];
+  // function
+  void checkAnswer(bool userAnswer) {
+    if (quizBrain.getAnswer() == userAnswer) {
+      quizResult.addCheck();
+    } else {
+      quizResult.addClose();
+    }
+    setState(() {
+      if (quizBrain.isFinished()) {
+        int result = quizResult.getFinalResult();
+        Alert(
+          context: context,
+          title: 'Finished!',
+          desc: 'Score : $result %',
+        ).show();
+        quizResult.reset();
+        quizBrain.reset();
+      } else {
+        quizBrain.nextQuestion();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,14 +81,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: const EdgeInsets.all(15.0),
             child: FlatButton(
               onPressed: () {
-                if (quizBrain.getAnswer() == true) {
-                  print('correct');
-                } else {
-                  print('incorrect');
-                }
-                setState(() {
-                  quizBrain.nextQuestion();
-                });
+                checkAnswer(true);
               },
               color: Colors.green,
               child: Text(
@@ -80,14 +96,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: const EdgeInsets.all(15.0),
             child: FlatButton(
               onPressed: () {
-                if (quizBrain.getAnswer() == false) {
-                  print('correct');
-                } else {
-                  print('incorrect');
-                }
-                setState(() {
-                  quizBrain.nextQuestion();
-                });
+                checkAnswer(false);
               },
               color: Colors.red,
               child: Text(
@@ -98,7 +107,7 @@ class _QuizPageState extends State<QuizPage> {
           ),
         ),
         Row(
-          children: iconList,
+          children: quizResult.getList(),
         )
       ],
     );
